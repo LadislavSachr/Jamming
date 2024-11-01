@@ -5,7 +5,7 @@ const SearchResults = (props) =>{
     return (
         <div>
             <h2>RESULTS</h2>
-            <Tracklist track={props.track} isRemoval=""/>
+            <Tracklist track={props.track} isRemoval="" addTrack={props.addTrack} />
         </div>
     )
 }

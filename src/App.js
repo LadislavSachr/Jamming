@@ -1,67 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import SearchBar from "./component/SearchBar.js";
 import SearchResults from "./component/SearchResults.js";
 import Playlist from "./component/Playlist.js";
+import Spotify from "./component/Spotify.js";
 
 const App = () =>{
-  const [searchVal,setSearchVal] = useState("");
-  const search = (v) =>{
-    setSearchVal(v);
-  };
-  const spotify=[
-    {
-      name:"song1",
-      artist:"artist1",
-      album:"album1"
-    },
-    {
-      name:"song2",
-      artist:"artist2",
-      album:"album2"
-    },
-    {
-      name:"song3",
-      artist:"artist3",
-      album:"album3"
-    },
-    {
-      name:"song4",
-      artist:"artist4",
-      album:"album4"
-    },
-    {
-      name:"song5",
-      artist:"artist5",
-      album:"album5"
-    },
-    {
-      name:"song6",
-      artist:"artist6",
-      album:"album6"
-    },
-    {
-      name:"song7",
-      artist:"artist7",
-      album:"album7"
-    },
-    {
-      name:"song8",
-      artist:"artist8",
-      album:"album8"
-    },
-    {
-      name:"song9",
-      artist:"artist9",
-      album:"album9"
+  const [searchVal,setSearchVal] = useState([]);
+  const [playlistTracks,setPlaylistTracks] = useState([]);
+  const [playlistName, setPlaylistName] = useState("");
+
+  useEffect(()=>{
+    if(playlistName!==""){
+      const trackUris = playlistTracks.map((track) => track.uri);
+      Spotify.savePlaylist(playlistName, trackUris).then(() => {
+        setPlaylistName("");
+        setPlaylistTracks([]);
+      });
     }
-  ];
+  },[playlistName]);
+  const search = (v) =>{
+    Spotify.search(v).then(setSearchVal);
+  };
+  const save = (v) =>{
+    setPlaylistName(v);
+  }
+  const removeT = (v) =>{
+    setPlaylistTracks(prev=>prev.filter(track=> track.id!==v.id));
+  }
+  const addT = (v) =>{
+    if(playlistTracks.some(track => track.id===v.id)){
+      return;
+    }
+    setPlaylistTracks(prev=>[v,...prev]);
+  }
   return (
     <div className="App">
       <SearchBar onSearch={search}/>
-      <SearchResults track={spotify} />
-      <Playlist track={spotify} />
+      <SearchResults track={searchVal} addTrack={addT} />
+      <Playlist track={playlistTracks} onSave={save} removeTrack={removeT} />
       <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </div>

@@ -13,8 +13,8 @@ function SearchBar(props){
 
     return (
         <div>
-            <label for="search">Search</label>
-            <input type="text" value={val} onChange={changeHandler} placeholder="search for artist"/>
+            <label htmlFor="search">Search</label>
+            <input id="search" type="text" value={val} onChange={changeHandler} placeholder="search for artist"/>
             <button onClick={clickHandler}>Search</button>
         </div>
     );
