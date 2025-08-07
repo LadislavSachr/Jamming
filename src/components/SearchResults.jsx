@@ -24,6 +24,7 @@ function SearchResults(){
     }
 
     function handleAdd(track){
+        
         track["id"]=idGenerator();
         setPlaylist((prev)=>{
             return [track, ...prev]; 
