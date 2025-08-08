@@ -58,7 +58,7 @@ const getToken = async code => {
   return response;
 }
 
-function Authorization({onClick}){
+function Author({onClick}){
     const [code,setCode] = useState("");
 
     function handleClickCode(){
@@ -75,7 +75,6 @@ function Authorization({onClick}){
     }
 
     useEffect(()=>{
-        console.log("hello");
         if(window.location.href.includes("/?code=")){
             setCode(getReturnCode(window.location.href));
         }
@@ -89,4 +88,4 @@ function Authorization({onClick}){
     )
 }
 
-export default Authorization;
+export default Author;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchResults from './components/SearchResults.jsx';
 import SearchBar from './components/SearchBar.jsx';
-import Authorization from './components/Authorization.jsx';
+import Authorization from './components/Author.jsx';
 import './App.css';
 
 function App() {
@@ -12,15 +12,15 @@ function App() {
   function tokenHandler(tok){
     setToken(tok.access_token);
     setExpires(tok.expires_in);
-    interval = setInterval(()=>{setExpires(prev=>prev-100)},1000)
+    interval = setInterval(()=>{setExpires(prev=>prev-1)},1000)
   }
   useEffect(()=>{
     localStorage.setItem('expiration', expires);
-    console.log(expires);
     if(expires===0&&token){
       localStorage.removeItem('access_token');
       setToken("");
       interval = 0;
+      window.location = "http://localhost:5173/"
     }
   },[expires])
   useEffect(()=>{
@@ -37,7 +37,7 @@ function App() {
     </>
     )
   }else{
-    return <Authorization onClick={tokenHandler} />
+    return <Author onClick={tokenHandler} />
   }
 }
 
