@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import Tracklist from './Tracklist';
 
 function Playlist(props){
-    const [name,setName]=useState("");
+    const [name, setName]=useState("");
 
     function handleClick(){
-        props.onSave();
+        props.onSave(name);
         setName("");
     }
 

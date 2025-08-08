@@ -23,7 +23,7 @@ const hashed = await sha256(codeVerifier)
 const codeChallenge = base64encode(hashed);
 const clientId = '03ce758df8ea4d95bd78e345c1a249bf'; //
 const redirectUri = 'http://localhost:5173/';
-const scope = "playlist-modify-public";
+const scope = "playlist-modify-public user-read-private";
 const authUrl = "https://accounts.spotify.com/authorize"; //
 
 const codeUrl = `${authUrl}?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}&code_challenge_method=S256&code_challenge=${codeChallenge}`;

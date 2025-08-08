@@ -3,7 +3,7 @@ import Resultlist from './Resultlist.jsx';
 import Playlist from './Playlist.jsx';
 import style from '../modules/SearchResults.module.css';
 
-function SearchResults({data}){
+function SearchResults({data,token}){
     const [playlist, setPlaylist] = useState([]);
 
     function handleAdd(track){
@@ -27,8 +27,41 @@ function SearchResults({data}){
             }); 
         });
     };
-    function handleSave(){
-        setPlaylist([]);
+    async function handleSave(name){
+        try{
+            let response = await fetch("https://api.spotify.com/v1/me",{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const user = await response.json(); // you will need id from this object
+            let id = user.id;
+            response = await fetch(`https://api.spotify.com/v1/users/${id}/playlists`,{
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    name: name
+                })
+            })
+            const pl = await response.json();
+            id = pl.id;
+            const uris = playlist.map(track=>track.uri);
+            fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`,{
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    uris: uris
+                })
+            });
+            setPlaylist([]);
+        }catch(e){
+            console.log(e);
+        }
+        //setPlaylist([]);
     }
     return (
         <div className={style.div}>

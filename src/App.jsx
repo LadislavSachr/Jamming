@@ -37,7 +37,7 @@ function App() {
     <>
       <h1>Hello</h1>
       <SearchBar onClick={dataHandler} token={token} />
-      <SearchResults data={data}/>
+      <SearchResults data={data} token={token} />
     </>
     )
   }else{
