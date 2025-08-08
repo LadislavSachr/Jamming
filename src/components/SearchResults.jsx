@@ -61,7 +61,6 @@ function SearchResults({data,token}){
         }catch(e){
             console.log(e);
         }
-        //setPlaylist([]);
     }
     return (
         <div className={style.div}>
