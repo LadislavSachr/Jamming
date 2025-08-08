@@ -7,8 +7,8 @@ function Track(props){
     }
     return (
         <div className={style.div}>
-            <h3 className={style.h3}>{props.track.songName}</h3>
-            <p className={style.p}>{props.track.artist}</p>
+            <h3 className={style.h3}>{props.track.name}</h3>
+            <p className={style.p}>{props.track.album}  |  {props.track.artist}</p>
             <button onClick={clickHandler} className={style.button}>{props.butt==="add"?"+":"-"}</button>
         </div>
     );
